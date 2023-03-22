@@ -22,12 +22,13 @@ def get_gpt_response(prompt):
         'Authorization': f'Bearer {gpt_api_key}'
     }
     data = {
-        'prompt': prompt,
-        'temperature': 0.7,
-        'max_tokens': 50
+        "model": "gpt-3.5-turbo",
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.7
     }
-    response = requests.post('https://api.openai.com/v1/engines/davinci-codex/completions', headers=headers, json=data)
-    return response.json()['choices'][0]['text']
+    response = requests.post('https://api.openai.com/v1/chat/completions', headers=headers, json=data)
+    response_text = response.json()['choices'][0]['message']['content']
+    return response_text.strip()
 
 # Handle Line messages
 @handler.add(MessageEvent, message=TextMessage)
