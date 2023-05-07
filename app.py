@@ -31,7 +31,7 @@ def get_gpt_response(prompt):
         response_text = response.json()['choices'][0]['message']['content']
         return response_text.strip()
     except:
-        app.logger.error("OpenAI Response: " + response.json())
+        app.logger.error("OpenAI Response: ", response.json())
         return "Server Error."
 
 # Handle Line messages
